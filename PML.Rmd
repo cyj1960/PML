@@ -63,9 +63,16 @@ Train models
 ```{r}
 library(randomForest)
 mod <- randomForest(classe ~., data=train)
+
+```
+
+
+Model accuracy
+```{r}
 pred <- predict(mod, validate)
 confusionMatrix(pred, validate$classe)
 ```
+
 
 Test data
 ```{r}

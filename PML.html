@@ -161,40 +161,41 @@ validate &lt;- training[-inTrain,]</code></pre>
 <pre><code>## The following object is masked from 'package:ggplot2':
 ## 
 ##     margin</code></pre>
-<pre class="r"><code>mod &lt;- randomForest(classe ~., data=train)
-pred &lt;- predict(mod, validate)
+<pre class="r"><code>mod &lt;- randomForest(classe ~., data=train)</code></pre>
+<p>Model accuracy</p>
+<pre class="r"><code>pred &lt;- predict(mod, validate)
 confusionMatrix(pred, validate$classe)</code></pre>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 2230   11    0    0    0
-##          B    1 1503   11    0    0
-##          C    0    4 1353   14    0
-##          D    0    0    4 1272    3
-##          E    1    0    0    0 1439
+##          A 2232   15    0    0    0
+##          B    0 1495    4    0    0
+##          C    0    8 1361   17    0
+##          D    0    0    3 1268    0
+##          E    0    0    0    1 1442
 ## 
 ## Overall Statistics
 ##                                           
-##                Accuracy : 0.9938          
-##                  95% CI : (0.9918, 0.9954)
+##                Accuracy : 0.9939          
+##                  95% CI : (0.9919, 0.9955)
 ##     No Information Rate : 0.2845          
 ##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
 ##                                           
-##                   Kappa : 0.9921          
+##                   Kappa : 0.9923          
 ##  Mcnemar's Test P-Value : NA              
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.9991   0.9901   0.9890   0.9891   0.9979
-## Specificity            0.9980   0.9981   0.9972   0.9989   0.9998
-## Pos Pred Value         0.9951   0.9921   0.9869   0.9945   0.9993
-## Neg Pred Value         0.9996   0.9976   0.9977   0.9979   0.9995
+## Sensitivity            1.0000   0.9848   0.9949   0.9860   1.0000
+## Specificity            0.9973   0.9994   0.9961   0.9995   0.9998
+## Pos Pred Value         0.9933   0.9973   0.9820   0.9976   0.9993
+## Neg Pred Value         1.0000   0.9964   0.9989   0.9973   1.0000
 ## Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838
-## Detection Rate         0.2842   0.1916   0.1724   0.1621   0.1834
-## Detection Prevalence   0.2856   0.1931   0.1747   0.1630   0.1835
-## Balanced Accuracy      0.9986   0.9941   0.9931   0.9940   0.9989</code></pre>
+## Detection Rate         0.2845   0.1905   0.1735   0.1616   0.1838
+## Detection Prevalence   0.2864   0.1911   0.1767   0.1620   0.1839
+## Balanced Accuracy      0.9987   0.9921   0.9955   0.9928   0.9999</code></pre>
 <p>Test data</p>
 <pre class="r"><code>predT &lt;- predict(mod, testing)
 predT</code></pre>
