@@ -1,0 +1,76 @@
+---
+title: "Project"
+author: "Yujiao Chen"
+date: "March 9, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Load library
+```{r}
+library(caret)
+library(dplyr)
+```
+
+Load data
+```{r}
+url <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+training <- read.csv(url)
+url <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+testing <- read.csv(url)
+```
+
+Exclude variables such as time and X
+```{r}
+training <- training[,8:160]
+```
+
+Checking the number of complete cases
+```{r}
+sum(complete.cases(training))
+```
+compete cases are too few. 
+
+Checking for columns with too many NA
+Exclude the columns with too many NA
+```{r}
+naByCol<-apply(training,2,function(x) sum(is.na(x)))
+training <- training[,naByCol<1000]
+
+
+```
+
+
+Checking for columns with too many blank
+Exclude the columns with too many blank 
+```{r}
+blankByCol <- apply(training, 2, function(x) sum(x==""))
+training <- training[, blankByCol<1000]
+```
+
+Partition of the training data
+```{r}
+inTrain <- createDataPartition(training$classe, p=0.6)[[1]]
+train <- training[inTrain,]
+validate <- training[-inTrain,]
+```
+
+Train models
+```{r}
+library(randomForest)
+mod <- randomForest(classe ~., data=train)
+pred <- predict(mod, validate)
+confusionMatrix(pred, validate$classe)
+```
+
+Test data
+```{r}
+
+predT <- predict(mod, testing)
+predT
+```
+
